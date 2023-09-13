@@ -90,4 +90,48 @@ for i in range(2,10):
 print(bestACC)
 plt.plot(accs)
 # %%
-# XGboost,,,
+from sklearn.ensemble import GradientBoostingClassifier as GB
+# 그래디언트 부스팅 - 무겁다
+def makeGB(i,j):
+    gb=GB(min_samples_split=j, n_estimators=i*50)
+    gb.fit(X_tr,Y_tr)
+    pred = gb.predict(X_te)
+    acc = accuracy_score(pred,Y_te)
+    print('GB[',i,j,']acc:',acc)
+    return acc
+accs=[]
+beforeACC = 0
+bestACC = []
+for i in range(1,10):
+    for j in range(2,10):
+        acc = makeGB(i,j)
+        if (acc > beforeACC):
+            bestACC = [i,j,acc]
+        beforeACC = acc
+        accs.append(acc) #리스트에 데이터 추가
+# %%
+print(bestACC)
+plt.plot(accs)
+# %%
+from sklearn.ensemble import AdaBoostClassifier as AB
+# 그래디언트 부스팅 - 무겁다
+def makeAB(i):
+    ab=AB(n_estimators=i*20)
+    ab.fit(X_tr,Y_tr)
+    pred = ab.predict(X_te)
+    acc = accuracy_score(pred,Y_te)
+    print('AB[',i,']acc:',acc)
+    return acc
+accs=[]
+beforeACC = 0
+bestACC = []
+for i in range(1,10):
+    acc = makeAB(i)
+    if (acc > beforeACC):
+        bestACC = [i,acc]
+    beforeACC = acc
+    accs.append(acc) #리스트에 데이터 추가
+# %%
+print(bestACC)
+plt.plot(accs)
+# %%
