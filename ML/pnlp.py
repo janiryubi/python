@@ -9,8 +9,7 @@ import seaborn as sns #그래프 고도화
 # %%
 from konlpy.tag import Kkma
 # %%
-kkma=Kkma()
-# %%
+kkma=Kkma()# %%
 res = kkma.pos('안녕하세요 여러분 만나서 반갑습니다.')
 res
 # %%
@@ -83,4 +82,28 @@ cdf
 # %%
 tdf = pd.DataFrame(tvtable[:100,:100])
 tdf
+# %%
+print(cvect.vocabulary_)
+voca = cvect.vocabulary_
+vosort = {k: v for k, v in sorted(voca.items(), key=lambda item: item[1])}
+cols = vosort.keys()
+cbdf = pd.DataFrame(cvtable,columns=cols)
+cbdf
+# %%
+from sklearn.metrics.pairwise import cosine_similarity,manhattan_distances
+def getCosim(v1,v2):
+    cosim = cosine_similarity(v1,v2)
+    return(cosim)
+v1=cbdf.values
+v2=cbdf.iloc[3].values.reshape(-1,1)
+print(v1.shape,v2.shape)
+csimv = getCosim(v1,v1)
+csimv[2]
+# %%
+import numpy as np
+simtxt = np.where(csimv[2]>0.1)
+# %%
+for sim in simtxt[0]:
+    print(np.round(csimv[2][sim],2),':',lucks[sim])
+    print('-'*30)
 # %%
