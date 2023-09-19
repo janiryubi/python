@@ -27,11 +27,9 @@ print('최대:',X_tr[0].max(),'최소:',X_tr[0].min())
 print(x_tr[0].max())
 plt.hist(y_tr)
 #%%
-# 모델결정 DNN
+# 모델결정 ANN
 layer=[
     tf.keras.layers.Flatten(input_shape=(28,28)), #펼친다
-    tf.keras.layers.Dense(128,activation = 'relu'), # 얼마나 영향?
-    tf.keras.layers.Dense(64,activation = 'relu'),
     tf.keras.layers.Dense(10,activation = 'softmax') # unit
 ]
 model = tf.keras.models.Sequential(layer)
@@ -45,10 +43,4 @@ model.compile(optimizer = 'adam',
 #%%
 # 학습하기
 model.fit(x_tr,y_tr,epochs = 10)
-# %%
-# 시험보기
-loss,acc = model.evaluate(x_te,y_te)
-# %%
-# 차이가 많이나면 과적합이 나고 있는 것, 공부는 잘하지만 시험은 못봄
-print(loss,acc)
 # %%
